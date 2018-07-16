@@ -7,8 +7,8 @@ android {
 
     defaultConfig {
         applicationId "com.takarakuji.chessplayer.miaplicacion"
-        minSdkVersion 21
-        targetSdkVersion 24
+        minSdkVersion 18
+        targetSdkVersion 21
         versionCode 2
         versionName "1.0"
     }
@@ -19,7 +19,9 @@ android {
         }
     }
 }
-
+realm {
+    syncEnabled = true;
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'junit:junit:4.12'

@@ -46,7 +46,7 @@ public class MyAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(this.layout, null);
 
             holder = new ViewHolder();
-           // holder.nameTextView = (TextView) convertView.findViewById(R.id.textView);
+            holder.nameTextView = (TextView) convertView.findViewById(R.id.textView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
