@@ -69,7 +69,7 @@ public class BoardAdapter extends BaseAdapter{
 
         vh.notes.setText(textForNotes);
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String createdAt = df.format(board.getCreatedAt());
         vh.createdAt.setText(createdAt);
         vh.createdAt.setText(createdAt);

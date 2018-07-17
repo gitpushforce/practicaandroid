@@ -1,12 +1,14 @@
 package androide.practica.com.practicaandroid.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,9 +17,10 @@ import androide.practica.com.practicaandroid.R;
 import androide.practica.com.practicaandroid.adapters.BoardAdapter;
 import androide.practica.com.practicaandroid.models.Board;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class MainActivityBoard extends AppCompatActivity {
+public class MainActivityBoard extends AppCompatActivity implements RealmChangeListener<RealmResults<Board>>, AdapterView.OnItemClickListener {
     private Realm realm;
     private FloatingActionButton fab;
     private ListView listView;
@@ -34,10 +37,13 @@ public class MainActivityBoard extends AppCompatActivity {
 
         // SELECT ALL sql
         boards = realm.where(Board.class).findAll();
+        boards.addChangeListener(this);
 
         adapter = new BoardAdapter(this, boards, R.layout.list_view_board_item);
         listView = findViewById(R.id.listViewBoard);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+
         fab = findViewById(R.id.fabAddBoard);
 
        fab.setOnClickListener(new View.OnClickListener() {
@@ -88,4 +94,15 @@ public class MainActivityBoard extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(MainActivityBoard.this, NoteActivity.class);
+        intent.putExtra("id", boards.get(position).getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onChange(RealmResults<Board> boards) {
+        adapter.notifyDataSetChanged();
+    }
 }
